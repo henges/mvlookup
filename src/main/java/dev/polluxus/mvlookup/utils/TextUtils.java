@@ -7,6 +7,7 @@ import org.slf4j.LoggerFactory;
 import java.time.Year;
 import java.time.format.DateTimeParseException;
 import java.util.Optional;
+import java.util.Set;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -38,6 +39,25 @@ public class TextUtils {
                 .flatMap(TextUtils::parseYear);
 
         return new MovieLookup(name.trim(), parsedYear);
+    }
+
+    private static final Set<Character> MARKDOWN_V2_RESERVED_CHARS = Set.of(
+            '_', '*', '[', ']', '(', ')', '~', '`', '>', '#', '+', '-', '=', '|', '{', '}', '.', '!'
+    );
+
+    public static String markdownV2Escape(final String s) {
+
+        final StringBuilder sb = new StringBuilder();
+
+        for (final Character c : s.toCharArray()) {
+            if (MARKDOWN_V2_RESERVED_CHARS.contains(c)) {
+                sb.append("\\");
+            }
+
+            sb.append(c);
+        }
+
+        return sb.toString();
     }
 
     public static boolean isBlank(final String input) {

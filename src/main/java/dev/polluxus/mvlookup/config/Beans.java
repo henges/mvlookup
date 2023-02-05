@@ -50,7 +50,7 @@ public class Beans {
 
         final SetWebhook wh = new SetWebhook()
                 .allowedUpdates("message")
-                .certificate(new File(botConfig.sslCertPath()))
+//                .certificate(new File(botConfig.sslCertPath()))
                 .url(botConfig.botUrl())
                 .secretToken(botConfig.sharedSecret());
 
