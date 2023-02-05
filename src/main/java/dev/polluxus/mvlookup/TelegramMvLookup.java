@@ -27,25 +27,17 @@ public class TelegramMvLookup {
     BotConfig botConfig;
 
     @POST
-    public CompletionStage<String> receiveUpdate(String body,
-                                             @HeaderParam("X-Telegram-Bot-Api-Secret-Token") String token) {
+    public void receiveUpdate(String body, @HeaderParam("X-Telegram-Bot-Api-Secret-Token") String token) {
 
         if (!botConfig.sharedSecret().equals(token)) {
             log.warn("Unauthenticated request received! Request body {}", body);
-            return FutureUtils.failed();
+            return;
         }
 
         final Update update = BotUtils.parseUpdate(body);
 
-        log.info("Got incoming update {}", update);
+        log.trace("Got incoming update {}", update);
 
-        return telegramService.handleUpdate(update)
-                .whenComplete((s, ex) -> {
-                    if (ex != null) {
-                        log.error("Responding to update {} with exception", update, ex);
-                    } else {
-                        log.info("Responding to update {} with response {}", update, s);
-                    }
-                });
+        telegramService.handleUpdate(update);
     }
 }

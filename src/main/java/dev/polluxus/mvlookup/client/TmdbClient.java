@@ -42,7 +42,7 @@ public class TmdbClient {
                     .addQueryParam("year", year.toString());
         }
 
-        log.info("Querying TMDB: {}", reqWithParams.uri() + reqWithParams.queryParams());
+        log.trace("Querying TMDB: {}", reqWithParams.uri() + reqWithParams.queryParams());
 
         return reqWithParams
                 .expect(ResponsePredicate.SC_OK)
@@ -53,7 +53,7 @@ public class TmdbClient {
                     if (ex != null) {
                         log.error("Got an error from TMDB", ex);
                     } else {
-                        log.info("Got response from TMDB: {} {}", h.statusCode(), h.body());
+                        log.trace("Got response from TMDB: {}", h.statusCode());
                     }
                 })
                 .thenApply(HttpResponse::body);

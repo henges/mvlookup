@@ -13,6 +13,19 @@ public record FilmResponseMessage(
 
         return String.format(
                 """
+                *%s* \\(%s\\) \\- [Letterboxd](https://letterboxd.com/tmdb/%d) \\| [TMDB](https://www.themoviedb.org/movie/%d)
+                """,
+                TextUtils.markdownV2Escape(title),
+                TextUtils.markdownV2Escape(releaseDate),
+                id,
+                id
+        );
+    }
+
+    public String toMarkdownMessageWithDescription() {
+
+        return String.format(
+                """
                 *%s* \\(%s\\)
                                 
                 %s
