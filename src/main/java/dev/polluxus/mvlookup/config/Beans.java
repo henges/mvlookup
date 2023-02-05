@@ -5,6 +5,8 @@ import com.pengrad.telegrambot.TelegramBot;
 import com.pengrad.telegrambot.request.SetWebhook;
 import com.pengrad.telegrambot.response.BaseResponse;
 import dev.polluxus.mvlookup.config.ConfigContainer.BotConfig;
+import io.quarkus.runtime.Startup;
+import io.quarkus.runtime.StartupEvent;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.web.client.WebClient;
 import org.slf4j.Logger;
@@ -36,6 +38,7 @@ public class Beans {
 
     @Produces
     @ApplicationScoped
+    @Startup
     public TelegramBot telegramBot() {
 
         final TelegramBot bot = new TelegramBot(botConfig.botToken());
@@ -48,11 +51,18 @@ public class Beans {
         final SetWebhook wh = new SetWebhook()
                 .allowedUpdates("message")
                 .certificate(new File(botConfig.sslCertPath()))
-                .url(botConfig.botUrl());
+                .url(botConfig.botUrl())
+                .secretToken(botConfig.sharedSecret());
+
+        log.info("Starting webhook receive at URL {}", botConfig.botUrl());
 
         bot.execute(wh, new Callback<SetWebhook, BaseResponse>() {
             @Override
             public void onResponse(SetWebhook request, BaseResponse response) {
+                if (response.isOk()) {
+                    log.info("Got OK on registering webhook. Ready to begin receiving messages.");
+                }
+
                 if (!response.isOk()) {
                     log.error("Error mounting webhook, error code {}", response.errorCode());
                     System.exit(1);

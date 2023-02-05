@@ -23,6 +23,10 @@ public interface ConfigContainer {
         @WithName("ssl.cert.path")
         @WithDefault("none")
         String sslCertPath();
+
+        @WithName("shared.secret")
+        @WithDefault("none")
+        String sharedSecret();
     }
 
     @ConfigMapping(prefix = "mvlookup.tmdb")
