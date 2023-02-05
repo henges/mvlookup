@@ -1,6 +1,7 @@
-package dev.polluxus.mvlookup;
+package dev.polluxus.mvlookup.utils;
 
 import dev.polluxus.mvlookup.model.MovieLookup;
+import dev.polluxus.mvlookup.utils.TextUtils;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;

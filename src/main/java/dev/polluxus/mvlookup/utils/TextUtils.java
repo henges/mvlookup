@@ -1,4 +1,4 @@
-package dev.polluxus.mvlookup;
+package dev.polluxus.mvlookup.utils;
 
 import dev.polluxus.mvlookup.model.MovieLookup;
 import org.slf4j.Logger;
@@ -26,11 +26,12 @@ public class TextUtils {
         }
 
         final String name = m.group(1);
-        final String year = m.group(2);
         if (isBlank(name)) {
             log.error("Invalid state for input {}: `name` was blank", input);
             return null;
         }
+
+        final String year = m.group(2);
         final Optional<Year> parsedYear = Optional.ofNullable(year)
                 .filter(s -> !isBlank(s))
                 .map(String::trim)

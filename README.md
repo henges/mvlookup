@@ -1,3 +1,9 @@
+**{original_title}** ({release_date})
+
+{overview}
+
+[View on TMDB](https://www.themoviedb.org/movie/{id})
+
 # mvlookup
 
 This project uses Quarkus, the Supersonic Subatomic Java Framework.
