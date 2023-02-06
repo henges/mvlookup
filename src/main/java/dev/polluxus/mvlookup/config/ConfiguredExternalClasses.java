@@ -6,7 +6,6 @@ import com.pengrad.telegrambot.request.SetWebhook;
 import com.pengrad.telegrambot.response.BaseResponse;
 import dev.polluxus.mvlookup.config.ConfigContainer.BotConfig;
 import io.quarkus.runtime.Startup;
-import io.quarkus.runtime.StartupEvent;
 import io.vertx.mutiny.core.Vertx;
 import io.vertx.mutiny.ext.web.client.WebClient;
 import org.slf4j.Logger;
@@ -16,13 +15,12 @@ import javax.enterprise.context.ApplicationScoped;
 import javax.enterprise.inject.Produces;
 import javax.inject.Inject;
 import javax.inject.Singleton;
-import java.io.File;
 import java.io.IOException;
 
 @Singleton
-public class Beans {
+public class ConfiguredExternalClasses {
 
-    private static final Logger log = LoggerFactory.getLogger(Beans.class);
+    private static final Logger log = LoggerFactory.getLogger(ConfiguredExternalClasses.class);
 
     @Inject
     Vertx vertx;
@@ -41,7 +39,9 @@ public class Beans {
     @Startup
     public TelegramBot telegramBot() {
 
-        final TelegramBot bot = new TelegramBot(botConfig.botToken());
+        final TelegramBot bot = new TelegramBot.Builder(botConfig.botToken())
+                        .apiUrl(botConfig.telegramUrl())
+                        .build();
 
         if (!botConfig.enableWebhooks()) {
             log.info("Webhooks not enabled!");
@@ -50,7 +50,6 @@ public class Beans {
 
         final SetWebhook wh = new SetWebhook()
                 .allowedUpdates("message")
-//                .certificate(new File(botConfig.sslCertPath()))
                 .url(botConfig.botUrl())
                 .secretToken(botConfig.sharedSecret());
 

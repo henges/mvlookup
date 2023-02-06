@@ -19,6 +19,7 @@ import java.util.concurrent.CompletionStage;
 public class TelegramMvLookup {
 
     private static final Logger log = LoggerFactory.getLogger(TelegramMvLookup.class);
+    public static final String X_TELEGRAM_BOT_API_SECRET_TOKEN = "X-Telegram-Bot-Api-Secret-Token";
 
     @Inject
     TelegramService telegramService;
@@ -27,17 +28,17 @@ public class TelegramMvLookup {
     BotConfig botConfig;
 
     @POST
-    public void receiveUpdate(String body, @HeaderParam("X-Telegram-Bot-Api-Secret-Token") String token) {
+    public CompletionStage<Void> receiveUpdate(String body, @HeaderParam(X_TELEGRAM_BOT_API_SECRET_TOKEN) String token) {
 
         if (!botConfig.sharedSecret().equals(token)) {
             log.warn("Unauthenticated request received! Request body {}", body);
-            return;
+            return FutureUtils.done();
         }
 
         final Update update = BotUtils.parseUpdate(body);
 
         log.trace("Got incoming update {}", update);
 
-        telegramService.handleUpdate(update);
+        return telegramService.handleUpdate(update);
     }
 }

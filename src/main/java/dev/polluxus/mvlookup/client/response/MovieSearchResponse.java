@@ -1,4 +1,4 @@
-package dev.polluxus.mvlookup.client;
+package dev.polluxus.mvlookup.client.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 

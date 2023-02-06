@@ -1,7 +1,6 @@
 package dev.polluxus.mvlookup.utils;
 
-import dev.polluxus.mvlookup.model.MovieLookup;
-import dev.polluxus.mvlookup.utils.TextUtils;
+import dev.polluxus.mvlookup.request.MovieQuery;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.Arguments;
 import org.junit.jupiter.params.provider.MethodSource;
@@ -15,17 +14,19 @@ public class TextUtilsTest {
 
     @ParameterizedTest
     @MethodSource("parseAsMovieLookupSucceedsParams")
-    public void test_parseAsMovieLookupSucceeds(final String input, final MovieLookup expected) {
+    public void test_parseAsMovieLookupSucceeds(final String input, final MovieQuery expected) {
 
-        final MovieLookup actual = TextUtils.parseAsMovieLookup(input);
+        final MovieQuery actual = TextUtils.parseAsMovieQuery(input);
         assertEquals(expected, actual);
     }
 
     static Stream<Arguments> parseAsMovieLookupSucceedsParams() {
         return Stream.of(
-                arguments("[[rashomon|1954]]", MovieLookup.of("rashomon", "1954")),
-                arguments("[[rashomon]]", MovieLookup.of("rashomon")),
-                arguments("[[    rashomon   |   1954    ]]", MovieLookup.of("rashomon", "1954"))
+                arguments("[[rashomon|1950]]", MovieQuery.of("rashomon", "1950")),
+                arguments("[[rashomon]]", MovieQuery.of("rashomon")),
+                arguments("[[    rashomon   |   1950    ]]", MovieQuery.of("rashomon", "1950")),
+                arguments("does anybody want to watch [[rashomon]] sometime soon?", MovieQuery.of("rashomon")),
+                arguments("[[rashomon]] [[the third man]]", MovieQuery.of("rashomon"))
         );
     }
 
@@ -33,7 +34,7 @@ public class TextUtilsTest {
     @MethodSource("parseAsMovieLookupFailsParams")
     public void test_parseAsMovieLookupFails(final String input) {
 
-        final MovieLookup actual = TextUtils.parseAsMovieLookup(input);
+        final MovieQuery actual = TextUtils.parseAsMovieQuery(input);
         assertNull(actual);
     }
 

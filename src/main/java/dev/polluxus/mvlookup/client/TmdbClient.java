@@ -3,6 +3,7 @@ package dev.polluxus.mvlookup.client;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
+import dev.polluxus.mvlookup.client.response.MovieSearchResponse;
 import dev.polluxus.mvlookup.config.ConfigContainer.TmdbClientConfig;
 import io.vertx.mutiny.ext.web.client.HttpResponse;
 import io.vertx.mutiny.ext.web.client.WebClient;

@@ -1,13 +1,12 @@
 package dev.polluxus.mvlookup.utils;
 
-import dev.polluxus.mvlookup.model.MovieLookup;
+import dev.polluxus.mvlookup.request.MovieQuery;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import java.time.Year;
 import java.time.format.DateTimeParseException;
-import java.util.Optional;
-import java.util.Set;
+import java.util.*;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -17,7 +16,7 @@ public class TextUtils {
 
     private static final Pattern PATTERN = Pattern.compile("\\[\\[([^|\\]]*)[|]?([^|\\]]*)]]");
 
-    public static MovieLookup parseAsMovieLookup(final String input) {
+    public static MovieQuery parseAsMovieQuery(final String input) {
 
         final Matcher m = PATTERN.matcher(input);
 
@@ -38,7 +37,7 @@ public class TextUtils {
                 .map(String::trim)
                 .flatMap(TextUtils::parseYear);
 
-        return new MovieLookup(name.trim(), parsedYear);
+        return new MovieQuery(name.trim(), parsedYear);
     }
 
     private static final Set<Character> MARKDOWN_V2_RESERVED_CHARS = Set.of(

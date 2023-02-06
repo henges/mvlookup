@@ -27,6 +27,10 @@ public interface ConfigContainer {
         @WithName("shared.secret")
         @WithDefault("none")
         String sharedSecret();
+
+        @WithName("telegram.api.url")
+        @WithDefault("https://api.telegram.org/bot")
+        String telegramUrl();
     }
 
     @ConfigMapping(prefix = "mvlookup.tmdb")
