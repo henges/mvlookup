@@ -63,6 +63,8 @@ public class TelegramService {
                 });
     }
 
+
+
     private Callback<SendMessage, SendResponse> logOnFailureCallback(Message msg) {
 
         return new Callback<>() {

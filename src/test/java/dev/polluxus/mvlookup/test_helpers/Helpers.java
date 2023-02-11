@@ -1,7 +1,9 @@
 package dev.polluxus.mvlookup.test_helpers;
 
 import com.github.tomakehurst.wiremock.WireMockServer;
+import com.github.tomakehurst.wiremock.matching.RequestPattern;
 import com.github.tomakehurst.wiremock.matching.RequestPatternBuilder;
+import com.github.tomakehurst.wiremock.stubbing.ServeEvent;
 import com.github.tomakehurst.wiremock.verification.LoggedRequest;
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Chat;
@@ -31,12 +33,22 @@ public class Helpers {
     public static List<String> getTelegramMessages(final WireMockServer mocks, RequestPatternBuilder pattern,
                                                    int count) {
 
-        final List<LoggedRequest> reqs = mocks.findAll(pattern);
-        Assertions.assertEquals(count, reqs.size());
+        final RequestPattern built = pattern.build();
 
-        return reqs.stream()
+        List<ServeEvent> events = mocks.getAllServeEvents()
+                .stream()
+                .filter(r -> built.match(r.getRequest()).isExactMatch())
+                .toList();
+        Assertions.assertEquals(count, events.size());
+
+        final var ret = events.stream()
+                .map(ServeEvent::getRequest)
                 .map(Helpers::parseQueryString)
                 .toList();
+
+        events.forEach(e -> mocks.removeServeEvent(e.getId()));
+
+        return ret;
     }
 
     public static String markdownV2Of(Long chatId, String text) {

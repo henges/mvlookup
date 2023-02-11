@@ -93,6 +93,12 @@ public class TelegramMvLookupTest {
                         Helpers.createUpdate("wanna watch [[wavelength|1967]]?", "alex", 123L),
                         "wavelength", "1967", TestData.TMDB_WAVELENGTH_RESPONSE, TestData.MVLOOKUP_WAVELENGTH_RESPONSE_SHORT
                 )
+//                ,
+//                arguments(
+//                        Helpers.createUpdate("before [[ลุงบุญมีระลึกชาติ]] and other text", "ella", 456L),
+//                        "ลุงบุญมีระลึกชาติ", null, TestData.TMDB_UNCLE_BOONMEE_RESPONSE,
+//                        TestData.MVLOOKUP_UNCLE_BOONMEE_RESPONSE_SHORT
+//                )
         );
     }
 
