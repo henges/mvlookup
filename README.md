@@ -1,66 +1,46 @@
-**{original_title}** ({release_date})
-
-{overview}
-
-[View on TMDB](https://www.themoviedb.org/movie/{id})
-
 # mvlookup
 
-This project uses Quarkus, the Supersonic Subatomic Java Framework.
+A Telegram bot to facilitate conversations about movies by servicing inline queries for film data.
 
-If you want to learn more about Quarkus, please visit its website: https://quarkus.io/ .
+You can try it out by messaging [@mvlookup_bot](https://t.me/mvlookup_bot) on Telegram.
 
-## Running the application in dev mode
+![A screenshot of a Telegram conversation demonstrating the use of mvlookup.](docs/mvlookup_demo_1.png)
 
-You can run your application in dev mode that enables live coding using:
-```shell script
-./mvnw compile quarkus:dev
+
+## Using the bot
+The bot responds to inline queries in the form:
+
+```
+[[title|optional(year)]]
 ```
 
-> **_NOTE:_**  Quarkus now ships with a Dev UI, which is available in dev mode only at http://localhost:8080/q/dev/.
+If a match was found, the bot will respond with a message providing the title and release date of the film, plus 
+links to the film on [Letterboxd.com](https://letterboxd.com/) and [TMDB](https://www.themoviedb.org/).
 
-## Packaging and running the application
+## Running the bot
 
-The application can be packaged using:
-```shell script
-./mvnw package
-```
-It produces the `quarkus-run.jar` file in the `target/quarkus-app/` directory.
-Be aware that it’s not an _über-jar_ as the dependencies are copied into the `target/quarkus-app/lib/` directory.
+#### Requirements
+- Java 17
+- Optionally Apache Maven, else the bundled `./mvnw` may be used
 
-The application is now runnable using `java -jar target/quarkus-app/quarkus-run.jar`.
-
-If you want to build an _über-jar_, execute the following command:
-```shell script
-./mvnw package -Dquarkus.package.type=uber-jar
+This application runs on [Quarkus](https://quarkus.io/) and can be run in Quarkus' dev mode by running:
+```shell
+mvn quarkus:dev
 ```
 
-The application, packaged as an _über-jar_, is now runnable using `java -jar target/*-runner.jar`.
-
-## Creating a native executable
-
-You can create a native executable using: 
-```shell script
-./mvnw package -Pnative
+To build an über-jar, run:
+```shell
+mvn clean package
 ```
+The runnable `.jar` will then be available at `target/mvlookup-{VERSION}-runner.jar`.
 
-Or, if you don't have GraalVM installed, you can run the native executable build in a container using: 
-```shell script
-./mvnw package -Pnative -Dquarkus.native.container-build=true
-```
-
-You can then execute your native executable with: `./target/mvlookup-1.0.0-SNAPSHOT-runner`
-
-If you want to learn more about building native executables, please consult https://quarkus.io/guides/maven-tooling.
-
-## Related Guides
-
-- RESTEasy Reactive ([guide](https://quarkus.io/guides/resteasy-reactive)): A JAX-RS implementation utilizing build time processing and Vert.x. This extension is not compatible with the quarkus-resteasy extension, or any of the extensions that depend on it.
-
-## Provided Code
-
-### RESTEasy Reactive
-
-Easily start your Reactive RESTful Web Services
-
-[Related guide section...](https://quarkus.io/guides/getting-started-reactive#reactive-jax-rs-resources)
+#### Environment variables
+| Variable name               | Variable type | Required? | Description                                                                                             |
+|-----------------------------|---------------|-----------|---------------------------------------------------------------------------------------------------------|
+| `MVLOOKUP_BOT_TOKEN`        | String        | Yes       | The bot token to use to authenticate to the Telegram API.                                               |
+| `MVLOOKUP_BOT_URL`          | URL           | Yes       | The bot URL to use when receiving updates via webhooks. Must be set even if webhooks are disabled.      |
+| `MVLOOKUP_SHARED_SECRET`    | String        | No        | A value for Telegram to include in the `X-Telegram-Bot-Api-Secret-Token` header when using webhooks.    |
+| `MVLOOKUP_ENABLE_WEBHOOKS`  | Boolean       | No        | Default `false`. Whether to receive Telegram updates via webhooks.                                      |
+| `MVLOOKUP_TELEGRAM_API_URL` | URL           | No        | An alternative URL for Telegram, useful e.g. if you're running your own API server.                     |
+| `TMDB_API_URL`              | URL           | No        | The URL to use when calling TMDB.                                                                       |
+| `TMDB_API_TOKEN`            | String        | Yes       | Your API token for authenticating to TMDB.                                                              |

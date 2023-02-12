@@ -43,8 +43,11 @@ public class ConfiguredExternalClasses {
                         .apiUrl(botConfig.telegramUrl())
                         .build();
 
+        log.info("Shared secrets are {}required for Telegram calls during this session",
+                botConfig.sharedSecret().isPresent() ? "" : "not");
+
         if (!botConfig.enableWebhooks()) {
-            log.info("Webhooks not enabled!");
+            log.info("Webhooks are not enabled");
             return bot;
         }
 
@@ -53,7 +56,7 @@ public class ConfiguredExternalClasses {
                 .url(botConfig.botUrl());
         botConfig.sharedSecret().ifPresent(wh::secretToken);
 
-        log.info("Starting webhook receive at URL {}", botConfig.botUrl());
+        log.info("Calling setWebhook, bot URL {}", botConfig.botUrl());
 
         bot.execute(wh, new Callback<SetWebhook, BaseResponse>() {
             @Override

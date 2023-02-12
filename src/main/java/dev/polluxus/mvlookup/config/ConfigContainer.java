@@ -39,7 +39,6 @@ public interface ConfigContainer {
         String baseUrl();
 
         @WithName("api.token")
-        @WithDefault("none")
         String apiToken();
     }
 }
