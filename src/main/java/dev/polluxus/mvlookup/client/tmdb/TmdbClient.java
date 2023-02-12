@@ -1,9 +1,9 @@
-package dev.polluxus.mvlookup.client;
+package dev.polluxus.mvlookup.client.tmdb;
 
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 
-import dev.polluxus.mvlookup.client.response.MovieSearchResponse;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
 import dev.polluxus.mvlookup.config.ConfigContainer.TmdbClientConfig;
 import io.vertx.mutiny.ext.web.client.HttpResponse;
 import io.vertx.mutiny.ext.web.client.WebClient;
@@ -30,7 +30,7 @@ public class TmdbClient {
         this.webClient = webClient;
     }
 
-    public CompletionStage<MovieSearchResponse> searchMovie(final String name, final Year year) {
+    public CompletionStage<TmdbSearchResponse> searchMovie(final String name, final Year year) {
 
         final String endpoint = "/search/movie";
 
@@ -47,7 +47,7 @@ public class TmdbClient {
 
         return reqWithParams
                 .expect(ResponsePredicate.SC_OK)
-                .as(BodyCodec.json(MovieSearchResponse.class))
+                .as(BodyCodec.json(TmdbSearchResponse.class))
                 .send()
                 .subscribeAsCompletionStage()
                 .whenComplete((h, ex) -> {

@@ -1,6 +1,6 @@
 package dev.polluxus.mvlookup;
 
-import dev.polluxus.mvlookup.client.response.MovieSearchResponse;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
 import dev.polluxus.mvlookup.request.MovieQuery;
 import dev.polluxus.mvlookup.service.MvLookupService;
 import org.slf4j.Logger;
@@ -25,7 +25,7 @@ public class RestMvLookup {
     MvLookupService mvLookupService;
 
     @POST
-    public CompletionStage<MovieSearchResponse> getMovie(MovieQuery req) {
+    public CompletionStage<TmdbSearchResponse> getMovie(MovieQuery req) {
         log.info("Incoming request to lookup movie {}", req);
 
         return mvLookupService.lookup(req);

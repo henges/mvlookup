@@ -1,7 +1,7 @@
 package dev.polluxus.mvlookup.utils;
 
-import dev.polluxus.mvlookup.client.response.MovieSearchResponse;
-import dev.polluxus.mvlookup.client.response.MovieSearchResponse.MovieSearchResult;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse.MovieSearchResult;
 import dev.polluxus.mvlookup.request.MovieQuery;
 
 /**
@@ -20,7 +20,7 @@ public class MessageFormatters {
                         .orElse(""));
     }
 
-    public static String tmdbShortFormat(MovieQuery req, MovieSearchResponse resp) {
+    public static String tmdbShortFormat(MovieQuery req, TmdbSearchResponse resp) {
 
         if (resp.results().isEmpty()) { return empty(req); }
 
@@ -37,7 +37,7 @@ public class MessageFormatters {
         );
     }
 
-    public static String tmdbLongFormat(MovieQuery req, MovieSearchResponse resp) {
+    public static String tmdbLongFormat(MovieQuery req, TmdbSearchResponse resp) {
 
         if (resp.results().isEmpty()) {
             return empty(req);

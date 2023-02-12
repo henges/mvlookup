@@ -1,10 +1,10 @@
-package dev.polluxus.mvlookup.client.response;
+package dev.polluxus.mvlookup.client.tmdb.response;
 
 import com.fasterxml.jackson.annotation.JsonProperty;
 
 import java.util.List;
 
-public record MovieSearchResponse(
+public record TmdbSearchResponse(
         @JsonProperty("page") int page,
         @JsonProperty("results") List<MovieSearchResult> results,
         @JsonProperty("total_results") int totalResults,
