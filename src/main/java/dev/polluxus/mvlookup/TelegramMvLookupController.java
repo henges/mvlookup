@@ -31,7 +31,7 @@ public class TelegramMvLookupController {
     public CompletionStage<Void> receiveUpdate(String body, @HeaderParam(ConfigContainer.X_TELEGRAM_BOT_API_SECRET_TOKEN) String token) {
 
         if (botConfig.sharedSecret().map(s -> !s.equals(token)).orElse(false)) {
-            log.warn("Unauthenticated request received! Request body {}, s {}", body, botConfig.sharedSecret());
+            log.warn("Unauthenticated request received! Request body {}", body);
             return FutureUtils.done();
         }
 
