@@ -17,9 +17,9 @@ import java.util.concurrent.CompletionStage;
 @Path("/rest")
 @Consumes(MediaType.APPLICATION_JSON)
 @Produces(MediaType.APPLICATION_JSON)
-public class RestMvLookup {
+public class RestMvLookupController {
 
-    private static final Logger log = LoggerFactory.getLogger(RestMvLookup.class);
+    private static final Logger log = LoggerFactory.getLogger(RestMvLookupController.class);
 
     @Inject
     MvLookupService mvLookupService;
@@ -28,6 +28,6 @@ public class RestMvLookup {
     public CompletionStage<TmdbSearchResponse> getMovie(MovieQuery req) {
         log.info("Incoming request to lookup movie {}", req);
 
-        return mvLookupService.lookup(req);
+        return mvLookupService.lookupTmdb(req);
     }
 }

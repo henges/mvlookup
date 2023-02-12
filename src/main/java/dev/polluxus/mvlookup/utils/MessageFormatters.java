@@ -1,7 +1,7 @@
 package dev.polluxus.mvlookup.utils;
 
 import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
-import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse.MovieSearchResult;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse.TmdbMovieSearchResult;
 import dev.polluxus.mvlookup.request.MovieQuery;
 
 /**
@@ -24,7 +24,7 @@ public class MessageFormatters {
 
         if (resp.results().isEmpty()) { return empty(req); }
 
-        final MovieSearchResult res = resp.results().get(0);
+        final TmdbMovieSearchResult res = resp.results().get(0);
 
         return String.format(
                 """
@@ -43,7 +43,7 @@ public class MessageFormatters {
             return empty(req);
         }
 
-        final MovieSearchResult res = resp.results().get(0);
+        final TmdbMovieSearchResult res = resp.results().get(0);
 
         return String.format(
                 """

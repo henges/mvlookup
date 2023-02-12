@@ -14,7 +14,7 @@ public class MvLookupService {
     @Inject
     TmdbClient tmdbClient;
 
-    public CompletionStage<TmdbSearchResponse> lookup(final MovieQuery lookup) {
+    public CompletionStage<TmdbSearchResponse> lookupTmdb(final MovieQuery lookup) {
 
         return tmdbClient.searchMovie(lookup.name(), lookup.year().orElse(null));
     }

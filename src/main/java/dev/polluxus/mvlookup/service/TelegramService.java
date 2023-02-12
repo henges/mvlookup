@@ -51,9 +51,9 @@ public class TelegramService {
             return FutureUtils.done();
         }
 
-        log.info("Looking up {} for {}", query, update.message().chat().username());
+        log.info("Looking up {} for {}", query, update.message().from().username());
 
-        return mvLookupService.lookup(query)
+        return mvLookupService.lookupTmdb(query)
                 .thenApply(r -> MessageFormatters.tmdbShortFormat(query, r))
                 .thenAccept(r -> {
                     final SendMessage req = new SendMessage(msg.chat().id(), r).parseMode(ParseMode.MarkdownV2);

@@ -2,6 +2,7 @@ package dev.polluxus.mvlookup;
 
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Update;
+import dev.polluxus.mvlookup.config.ConfigContainer;
 import dev.polluxus.mvlookup.config.ConfigContainer.BotConfig;
 import dev.polluxus.mvlookup.service.TelegramService;
 import dev.polluxus.mvlookup.utils.FutureUtils;
@@ -16,10 +17,9 @@ import java.util.concurrent.CompletionStage;
 @Path("/telegram")
 @Produces(MediaType.APPLICATION_JSON)
 @Consumes(MediaType.APPLICATION_JSON)
-public class TelegramMvLookup {
+public class TelegramMvLookupController {
 
-    private static final Logger log = LoggerFactory.getLogger(TelegramMvLookup.class);
-    public static final String X_TELEGRAM_BOT_API_SECRET_TOKEN = "X-Telegram-Bot-Api-Secret-Token";
+    private static final Logger log = LoggerFactory.getLogger(TelegramMvLookupController.class);
 
     @Inject
     TelegramService telegramService;
@@ -28,10 +28,10 @@ public class TelegramMvLookup {
     BotConfig botConfig;
 
     @POST
-    public CompletionStage<Void> receiveUpdate(String body, @HeaderParam(X_TELEGRAM_BOT_API_SECRET_TOKEN) String token) {
+    public CompletionStage<Void> receiveUpdate(String body, @HeaderParam(ConfigContainer.X_TELEGRAM_BOT_API_SECRET_TOKEN) String token) {
 
-        if (!botConfig.sharedSecret().equals(token)) {
-            log.warn("Unauthenticated request received! Request body {}", body);
+        if (botConfig.sharedSecret().map(s -> !s.equals(token)).orElse(false)) {
+            log.warn("Unauthenticated request received! Request body {}, s {}", body, botConfig.sharedSecret());
             return FutureUtils.done();
         }
 

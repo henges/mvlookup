@@ -50,8 +50,8 @@ public class ConfiguredExternalClasses {
 
         final SetWebhook wh = new SetWebhook()
                 .allowedUpdates("message")
-                .url(botConfig.botUrl())
-                .secretToken(botConfig.sharedSecret());
+                .url(botConfig.botUrl());
+        botConfig.sharedSecret().ifPresent(wh::secretToken);
 
         log.info("Starting webhook receive at URL {}", botConfig.botUrl());
 

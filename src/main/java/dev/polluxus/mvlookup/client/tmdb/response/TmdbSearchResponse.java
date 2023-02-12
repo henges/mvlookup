@@ -6,13 +6,13 @@ import java.util.List;
 
 public record TmdbSearchResponse(
         @JsonProperty("page") int page,
-        @JsonProperty("results") List<MovieSearchResult> results,
+        @JsonProperty("results") List<TmdbMovieSearchResult> results,
         @JsonProperty("total_results") int totalResults,
         @JsonProperty("total_pages") int totalPages
 
 ) {
 
-    public record MovieSearchResult(
+    public record TmdbMovieSearchResult(
             @JsonProperty("poster_path") String posterPath,
             @JsonProperty("adult") boolean adult,
             @JsonProperty("overview") String overview,
