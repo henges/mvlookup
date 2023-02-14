@@ -4,10 +4,14 @@ import com.fasterxml.jackson.core.JsonProcessingException;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import com.pengrad.telegrambot.BotUtils;
 import com.pengrad.telegrambot.model.Update;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
+import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse.TmdbMovieSearchResult;
+
+import java.util.List;
 
 public class Helpers {
 
-    private static ObjectMapper objectMapper;
+    private static final ObjectMapper objectMapper = new ObjectMapper();
 
     /**
      * Decodes {@code input} to an object of class {@code klazz}, failing at runtime
@@ -15,14 +19,12 @@ public class Helpers {
      */
     public static <T> T assertJsonParse(final String input, Class<T> klazz) {
 
-        if (objectMapper == null) {
-            objectMapper = new ObjectMapper();
-        }
         try {
             return objectMapper.readValue(input, klazz);
         } catch (JsonProcessingException e) {
             throw new RuntimeException(
-                    String.format("FATAL: input %s was not parseable to klazz %s", input, klazz.getName())
+                    String.format("FATAL: input %s was not parseable to klazz %s, reason: %s", input,
+                            klazz.getName(), e.getMessage())
             );
         }
     }
@@ -46,5 +48,10 @@ public class Helpers {
                     }
                 }
                 """, msgText, username, chatId), Update.class);
+    }
+
+    public static TmdbSearchResponse createTmdbSearchResponse(final String name, final String releaseDate, final int tmdbId) {
+
+        return new TmdbSearchResponse(0, List.of(TmdbMovieSearchResult.ofMinimal(name, releaseDate, tmdbId)), 0, 0);
     }
 }

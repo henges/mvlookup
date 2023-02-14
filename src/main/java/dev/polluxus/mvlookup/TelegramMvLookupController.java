@@ -37,7 +37,7 @@ public class TelegramMvLookupController {
 
         final Update update = BotUtils.parseUpdate(body);
 
-        log.trace("Got incoming update {}", update);
+        log.debug("Got incoming update {}", update);
 
         return telegramService.handleUpdate(update);
     }

@@ -63,6 +63,37 @@ public class TestData {
                     "total_results": 1
                 }
                 """;
+
+        // Actual response trimmed for space + relevance reasons
+        public static final String TMDB_THE_THIRD_MAN_RESPONSE_JSON =
+                """
+                {
+                    "page": 1,
+                    "results": [
+                        {
+                            "adult": false,
+                            "backdrop_path": "/mYI1VlxvuSnHoK6GYwkFzAgcJXh.jpg",
+                            "genre_ids": [
+                                53,
+                                9648
+                            ],
+                            "id": 1092,
+                            "original_language": "en",
+                            "original_title": "The Third Man",
+                            "overview": "In postwar Vienna, Austria, Holly Martins, a writer of pulp Westerns, arrives penniless as a guest of his childhood chum Harry Lime, only to learn he has died. Martins develops a conspiracy theory after learning of a \\"third man\\" present at the time of Harry's death, running into interference from British officer Major Calloway, and falling head-over-heels for Harry's grief-stricken lover, Anna.",
+                            "popularity": 17.846,
+                            "poster_path": "/oIF3l7Dxp7Eyye10BNyM611wtKa.jpg",
+                            "release_date": "1949-08-31",
+                            "title": "The Third Man",
+                            "video": false,
+                            "vote_average": 7.981,
+                            "vote_count": 1514
+                        }
+                    ],
+                    "total_pages": 1,
+                    "total_results": 17
+                }
+                """;
     }
 
     public static final TmdbSearchResponse TMDB_WAVELENGTH_RESPONSE =
@@ -70,6 +101,10 @@ public class TestData {
 
     public static final TmdbSearchResponse TMDB_UNCLE_BOONMEE_RESPONSE =
             Helpers.assertJsonParse(Json.TMDB_UNCLE_BOONMEE_RESPONSE_JSON, TmdbSearchResponse.class);
+
+    public static final TmdbSearchResponse TMDB_THE_THIRD_MAN_RESPONSE =
+            Helpers.assertJsonParse(Json.TMDB_THE_THIRD_MAN_RESPONSE_JSON, TmdbSearchResponse.class);
+
 
     public static final String MVLOOKUP_WAVELENGTH_RESPONSE_SHORT =
             """
@@ -81,5 +116,10 @@ public class TestData {
             *Uncle Boonmee Who Can Recall His Past Lives* \\(2010\\-06\\-25\\) \\- [Letterboxd](https://letterboxd.com/tmdb/38368) \\| [TMDB](https://www.themoviedb.org/movie/38368)
             """;
 
+
+    public static final String MVLOOKUP_THE_THIRD_MAN_RESPONSE_SHORT =
+            """
+            *The Third Man* \\(1949\\-08\\-31\\) \\- [Letterboxd](https://letterboxd.com/tmdb/1092) \\| [TMDB](https://www.themoviedb.org/movie/1092)
+            """;
 
 }

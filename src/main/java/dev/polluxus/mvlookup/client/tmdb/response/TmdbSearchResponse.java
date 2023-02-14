@@ -27,5 +27,15 @@ public record TmdbSearchResponse(
             @JsonProperty("vote_count") int voteCount,
             @JsonProperty("video") boolean video,
             @JsonProperty("vote_average") int voteAverage
-    ) {}
+    ) {
+
+        public static TmdbMovieSearchResult ofMinimal(String name, String releaseDate, int id) {
+            return new TmdbMovieSearchResult(
+                    null, false, null, releaseDate,
+                    null, id, null, null,
+                    name, null, 0.0, 0,
+                    false, 0
+            );
+        }
+    }
 }

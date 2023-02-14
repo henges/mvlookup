@@ -31,6 +31,16 @@ public interface ConfigContainer {
         String telegramUrl();
     }
 
+    @ConfigMapping(prefix = "mvlookup.service")
+    interface ServiceConfig {
+
+        String DOWNSTREAM_RATE_LIMIT_DEFAULT = "5";
+
+        @WithName("downstream.rate.limit")
+        @WithDefault(DOWNSTREAM_RATE_LIMIT_DEFAULT)
+        int downstreamRateLimit();
+    }
+
     @ConfigMapping(prefix = "tmdb")
     interface TmdbClientConfig {
 

@@ -1,6 +1,6 @@
 package dev.polluxus.mvlookup;
 
-import dev.polluxus.mvlookup.LaunchesWithMinimumConfigTest.LaunchesWithMinimumConfigTestProfile;
+import dev.polluxus.mvlookup.LaunchesWithMinimumConfigIT.LaunchesWithMinimumConfigTestProfile;
 import io.quarkus.test.junit.QuarkusTest;
 import io.quarkus.test.junit.QuarkusTestProfile;
 import io.quarkus.test.junit.TestProfile;
@@ -10,7 +10,7 @@ import java.util.Map;
 
 @QuarkusTest
 @TestProfile(LaunchesWithMinimumConfigTestProfile.class)
-public class LaunchesWithMinimumConfigTest {
+public class LaunchesWithMinimumConfigIT {
 
     /**
      * Demonstrates that the application will launch

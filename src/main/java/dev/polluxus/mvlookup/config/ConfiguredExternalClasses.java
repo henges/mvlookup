@@ -44,7 +44,7 @@ public class ConfiguredExternalClasses {
                         .build();
 
         log.info("Shared secrets are {}required for Telegram calls during this session",
-                botConfig.sharedSecret().isPresent() ? "" : "not");
+                botConfig.sharedSecret().isPresent() ? "" : "not ");
 
         if (!botConfig.enableWebhooks()) {
             log.info("Webhooks are not enabled");
