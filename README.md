@@ -1,6 +1,6 @@
 # mvlookup
 
-A Telegram bot to facilitate conversations about movies by servicing inline queries for film data.
+A Telegram bot that helps facilitate conversations about films by servicing inline queries for film data.
 
 You can try it out by messaging [@mvlookup_bot](https://t.me/mvlookup_bot) on Telegram.
 
@@ -14,8 +14,10 @@ The bot responds to inline queries in the form:
 [[title|optional(year)]]
 ```
 
-If a match was found, the bot will respond with a message providing the title and release date of the film, plus 
-links to the film on [Letterboxd.com](https://letterboxd.com/) and [TMDB](https://www.themoviedb.org/).
+For each instance of this pattern in a message, the bot will respond with the title and 
+release date of the film, if found, plus links to the film on 
+[Letterboxd.com](https://letterboxd.com/) and [TMDB](https://www.themoviedb.org/). 
+The bot will indicate if no films match the query.
 
 ## Running the bot
 
