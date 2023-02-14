@@ -17,7 +17,9 @@ import org.slf4j.LoggerFactory;
 import javax.enterprise.context.ApplicationScoped;
 import javax.inject.Inject;
 import java.io.IOException;
+import java.util.List;
 import java.util.concurrent.CompletionStage;
+import java.util.stream.Collectors;
 
 @ApplicationScoped
 public class TelegramService {
@@ -46,15 +48,18 @@ public class TelegramService {
             return FutureUtils.done();
         }
 
-        final MovieQuery query = TextUtils.parseAsMovieQuery(text);
-        if (query == null) {
+        final List<MovieQuery> queries = TextUtils.parseAsMovieQueries(text);
+        if (queries.isEmpty()) {
             return FutureUtils.done();
         }
 
-        log.info("Looking up {} for {}", query, update.message().from().username());
+        log.info("Looking up {} for {}", queries, update.message().from().username());
 
-        return mvLookupService.lookupTmdb(query)
-                .thenApply(r -> MessageFormatters.tmdbShortFormat(query, r))
+        return mvLookupService.lookupTmdb(queries)
+                .thenApply(resps -> resps.stream()
+                        .map(MessageFormatters::tmdbShortFormat)
+                        .collect(Collectors.joining("\n"))
+                )
                 .thenAccept(r -> {
                     final SendMessage req = new SendMessage(msg.chat().id(), r).parseMode(ParseMode.MarkdownV2);
                     log.trace("Final message body (plus method field): {}", req.toWebhookResponse());

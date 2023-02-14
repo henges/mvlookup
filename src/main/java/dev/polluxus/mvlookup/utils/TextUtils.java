@@ -16,28 +16,34 @@ public class TextUtils {
 
     private static final Pattern PATTERN = Pattern.compile("\\[\\[([^|\\]]*)[|]?([^|\\]]*)]]");
 
-    public static MovieQuery parseAsMovieQuery(final String input) {
+    public static List<MovieQuery> parseAsMovieQueries(final String input) {
 
         final Matcher m = PATTERN.matcher(input);
 
         if (!m.find()) {
             log.trace("No match for input string {}", input);
-            return null;
+            return Collections.emptyList();
         }
 
-        final String name = m.group(1);
-        if (isBlank(name)) {
-            log.error("Invalid state for input {}: `name` was blank", input);
-            return null;
-        }
+        final List<MovieQuery> ret = new ArrayList<>();
 
-        final String year = m.group(2);
-        final Optional<Year> parsedYear = Optional.ofNullable(year)
-                .filter(s -> !isBlank(s))
-                .map(String::trim)
-                .flatMap(TextUtils::parseYear);
+        do {
+            final String name = m.group(1);
+            if (isBlank(name)) {
+                log.error("Invalid state for input {}: `name` was blank", input);
+                return Collections.emptyList();
+            }
 
-        return new MovieQuery(name.trim(), parsedYear);
+            final String year = m.group(2);
+            final Optional<Year> parsedYear = Optional.ofNullable(year)
+                    .filter(s -> !isBlank(s))
+                    .map(String::trim)
+                    .flatMap(TextUtils::parseYear);
+
+            ret.add(new MovieQuery(name.trim(), parsedYear));
+        } while (m.find());
+
+        return ret;
     }
 
     private static final Set<Character> MARKDOWN_V2_RESERVED_CHARS = Set.of(

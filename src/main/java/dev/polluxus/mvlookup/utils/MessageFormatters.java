@@ -3,6 +3,7 @@ package dev.polluxus.mvlookup.utils;
 import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse;
 import dev.polluxus.mvlookup.client.tmdb.response.TmdbSearchResponse.TmdbMovieSearchResult;
 import dev.polluxus.mvlookup.request.MovieQuery;
+import org.graalvm.collections.Pair;
 
 /**
  * Class for functions that transform a result into a MarkdownV2-compliant
@@ -18,6 +19,11 @@ public class MessageFormatters {
                 req.year()
                         .map(y -> " in year " + y)
                         .orElse(""));
+    }
+
+    public static String tmdbShortFormat(Pair<MovieQuery, TmdbSearchResponse> resp) {
+
+        return tmdbShortFormat(resp.getLeft(), resp.getRight());
     }
 
     public static String tmdbShortFormat(MovieQuery req, TmdbSearchResponse resp) {
